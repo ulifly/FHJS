@@ -32,4 +32,10 @@ const tony = {
     codeName: 'Ironman',
     vivo: true,
     edad: 40,
-}
+    trajes: ['Mark I', 'Mark V', 'Hulkbuster'],
+    direccion: {
+        calle: 'Primera',
+        pais: 'USA',
+        ciudad: 'New York'
+    }
+ }
