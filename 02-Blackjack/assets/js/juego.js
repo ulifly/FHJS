@@ -8,6 +8,9 @@ let puntosJugador = 0, puntosDealer = 0;
 
 const btnPedirCarta = document.querySelector('#pedirCarta');
 const puntuacionJugador = document.querySelectorAll('small');
+const graficosCarta = document.querySelector('#player-cards');
+const graficosDealer = document.querySelector('#dealer-cards');
+const cartaGrafica = document.createElement('img');
 
 //**  Esta funcion crea un nuevo deck y lo mezcla----------------------------------
 const crearDeck = () => {
@@ -57,4 +60,6 @@ btnPedirCarta.addEventListener('click', () => {
     puntosJugador += cardValue(carta);
     console.log(puntosJugador);
     puntuacionJugador[0].innerText = puntosJugador;
+    cartaGrafica.src = `assets/cartas/${carta}.png`;
+    graficosCarta.append(cartaGrafica);
 });
