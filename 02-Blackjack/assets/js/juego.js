@@ -8,9 +8,10 @@ let puntosJugador = 0, puntosDealer = 0;
 
 const btnPedirCarta = document.querySelector('#pedirCarta');
 const puntuacionJugador = document.querySelectorAll('small');
-const graficosCarta = document.querySelector('#player-cards');
-const graficosDealer = document.querySelector('#dealer-cards');
-const cartaGrafica = document.createElement('img');
+const divPlayerCards = document.querySelector('#player-cards');
+const divDealerCards = document.querySelector('#dealer-cards');
+
+
 
 //**  Esta funcion crea un nuevo deck y lo mezcla----------------------------------
 const crearDeck = () => {
@@ -49,8 +50,11 @@ const cardValue = (carta) => {
             (valor === 'A') ? 11 : 10
         : valor * 1;
 }
-//**  -----------------------------------------------------------------------------
+//**  -------------------------------------------------------------------------------
 
+// Turno del dealer (logica de juego de la casa) ------------------------------------
+
+// ** -------------------------------------------------------------------------------
 
 
 //botones
@@ -58,8 +62,18 @@ const cardValue = (carta) => {
 btnPedirCarta.addEventListener('click', () => {
     const carta = pedirCarta();
     puntosJugador += cardValue(carta);
-    console.log(puntosJugador);
     puntuacionJugador[0].innerText = puntosJugador;
+
+    const cartaGrafica = document.createElement('img');
     cartaGrafica.src = `assets/cartas/${carta}.png`;
-    graficosCarta.append(cartaGrafica);
+    cartaGrafica.classList ='carta'
+    divPlayerCards.append(cartaGrafica);
+
+    if (puntosJugador > 21) {
+        btnPedirCarta.disabled = true;
+        alert('Perdiste Zoquete');
+    } else if (puntosJugador == 21 ) {
+        btnPedirCarta.disabled = true;
+        alert('sacaste 21');
+    }
 });
