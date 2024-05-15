@@ -7,6 +7,8 @@ let puntosJugador = 0, puntosDealer = 0;
 //referencias html
 
 const btnPedirCarta = document.querySelector('#pedirCarta');
+const btnDetener = document.querySelector('#btnDetener');
+const btnNuevoJuego = document.querySelector('#btnNuevoJuego');
 const puntuacionJugador = document.querySelectorAll('small');
 const divPlayerCards = document.querySelector('#player-cards');
 const divDealerCards = document.querySelector('#dealer-cards');
@@ -52,12 +54,38 @@ const cardValue = (carta) => {
 }
 //**  -------------------------------------------------------------------------------
 
-// Turno del dealer (logica de juego de la casa) ------------------------------------
+
+// **  Turno del dealer (logica de juego de la casa) --------------------------------
+const turnoDealer = (puntosJugador) => {
+    do {
+        // TODO timeout entre carta y carta
+        const carta = pedirCarta();
+        puntosDealer += cardValue(carta);
+        puntuacionJugador[1].innerText = puntosDealer;
+
+        const cartaGrafica = document.createElement('img');
+        cartaGrafica.src = `assets/cartas/${carta}.png`;
+        cartaGrafica.classList ='carta'
+        divDealerCards.append(cartaGrafica);
+
+    } while ((puntosDealer < puntosJugador) && (puntosJugador <= 21));
+    setTimeout(() => {
+        if ((puntosJugador > 21) || ((puntosJugador < puntosDealer) && (puntosDealer<=21))) {
+            alert('Perdiste');
+        } else if(( puntosJugador == 21 ) && ( puntosDealer != 21) ){
+            alert('Ganaste');
+        } else if( puntosDealer > 21 ){
+            alert('Ganaste');
+        } else {
+            alert('Empate');
+        }
+    }, 500);
+}
+
 
 // ** -------------------------------------------------------------------------------
 
-
-//botones
+// ** botones --------------------------------------------------------------------
 
 btnPedirCarta.addEventListener('click', () => {
     const carta = pedirCarta();
@@ -71,9 +99,20 @@ btnPedirCarta.addEventListener('click', () => {
 
     if (puntosJugador > 21) {
         btnPedirCarta.disabled = true;
-        alert('Perdiste Zoquete');
+        turnoDealer(puntosJugador);
     } else if (puntosJugador == 21 ) {
         btnPedirCarta.disabled = true;
-        alert('sacaste 21');
+        turnoDealer(puntosJugador);
     }
 });
+
+btnDetener.addEventListener('click', () => {
+    btnPedirCarta.disabled = true;
+    btnDetener.disabled = true;
+    turnoDealer(puntosJugador);
+});
+
+btnNuevoJuego.addEventListener('click', () => {
+    location.reload();
+});
+
