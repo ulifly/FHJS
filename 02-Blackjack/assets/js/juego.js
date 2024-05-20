@@ -28,7 +28,6 @@ const crearDeck = () => {
         }
     }
     deck = _.shuffle(deck); //utilizamos la libreria underscore
-    console.log(deck);
     return deck;
 };
 crearDeck();
@@ -113,6 +112,16 @@ btnDetener.addEventListener('click', () => {
 });
 
 btnNuevoJuego.addEventListener('click', () => {
-    location.reload();
+    deck = [];
+    deck = crearDeck();
+    puntosJugador = 0;
+    puntosDealer = 0;
+    puntuacionJugador[0].innerText = 0;
+    puntuacionJugador[1].innerText = 0;
+    divPlayerCards.innerHTML = '';
+    divDealerCards.innerHTML = '';
+    btnPedirCarta.disabled = false;
+    btnDetener.disabled = false;
+
 });
 
